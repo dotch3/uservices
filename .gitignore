@@ -132,3 +132,6 @@ dmypy.json
 =======
 .pyre/
 >>>>>>> 3eae5d073ef5e8789ce3882cfe9386585154c320
+clientes_venv/*
+__pycache__/*
+*.pyc
