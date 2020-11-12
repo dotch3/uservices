@@ -3,10 +3,11 @@ from flask import jsonify, make_response, abort
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://127.0.0.1:27017/") # Local
+client = MongoClient("mongodb://mongodb:27017/") # Local
 db = client.clientes
 
 def get_dict_from_mongodb():
+    print('entering get_dict_from_mongodb...')
     itens_db = db.clientes.find()
     PEOPLE = {}
     for i in itens_db:
@@ -19,6 +20,7 @@ def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
 def read_all():
+    print('entering readAll...')
     PEOPLE = get_dict_from_mongodb()
     dict_clientes = [PEOPLE[key] for key in sorted(PEOPLE.keys())]
     clientes = jsonify(dict_clientes)
@@ -31,6 +33,7 @@ def read_all():
     return clientes
 
 def read_one(lname):
+    print('entering readOne...')
     PEOPLE = get_dict_from_mongodb()
     if lname in PEOPLE:
         person = PEOPLE.get(lname)
@@ -41,6 +44,7 @@ def read_one(lname):
     return person
 
 def create(person):
+    print('entering create...')
     lname = person.get("lname", None)
     fname = person.get("fname", None)
     PEOPLE = get_dict_from_mongodb()
@@ -61,6 +65,7 @@ def create(person):
         )
 
 def update(lname, person):
+    print('entering update...')
     query = { "lname": lname }
     update = { "$set": {
             "lname": lname,
